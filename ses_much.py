@@ -4,37 +4,37 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import json
 
-# サービスアカウント認証情報
-SERVICE_ACCOUNT_FILE = 'service_account.json'
-SCOPES = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/documents',
-    'https://www.googleapis.com/auth/drive'
-]
+# # サービスアカウント認証情報
+# SERVICE_ACCOUNT_FILE = 'service_account.json'
+# SCOPES = [
+#     'https://www.googleapis.com/auth/spreadsheets',
+#     'https://www.googleapis.com/auth/documents',
+#     'https://www.googleapis.com/auth/drive'
+# ]
 
-# Google API認証
-def authenticate_google_services():
-    with open(SERVICE_ACCOUNT_FILE, 'r') as f:
-        service_account_info = json.load(f)
-    credentials = service_account.Credentials.from_service_account_info(
-        service_account_info, scopes=SCOPES
-    )
-    return credentials
+# # Google API認証
+# def authenticate_google_services():
+#     with open(SERVICE_ACCOUNT_FILE, 'r') as f:
+#         service_account_info = json.load(f)
+#     credentials = service_account.Credentials.from_service_account_info(
+#         service_account_info, scopes=SCOPES
+#     )
+#     return credentials
 
-# Google Sheetsからデータを取得
-def get_data_from_sheets(sheet_id, range_name):
-    credentials = authenticate_google_services()
-    service = build('sheets', 'v4', credentials=credentials)
-    sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=sheet_id, range=range_name).execute()
-    values = result.get('values', [])
-    if not values:
-        return pd.DataFrame()
-    # ヘッダーを設定してDataFrameに変換
-    df = pd.DataFrame(values[1:], columns=values[0])
-    # 必要に応じてデータ型を変換
-    df['希望単価'] = pd.to_numeric(df['希望単価'], errors='coerce')
-    return df
+# # Google Sheetsからデータを取得
+# def get_data_from_sheets(sheet_id, range_name):
+#     credentials = authenticate_google_services()
+#     service = build('sheets', 'v4', credentials=credentials)
+#     sheet = service.spreadsheets()
+#     result = sheet.values().get(spreadsheetId=sheet_id, range=range_name).execute()
+#     values = result.get('values', [])
+#     if not values:
+#         return pd.DataFrame()
+#     # ヘッダーを設定してDataFrameに変換
+#     df = pd.DataFrame(values[1:], columns=values[0])
+#     # 必要に応じてデータ型を変換
+#     df['希望単価'] = pd.to_numeric(df['希望単価'], errors='coerce')
+#     return df
 
 # サンプルデータ (人材一覧)
 data = {
@@ -50,9 +50,9 @@ talent_df = pd.DataFrame(data)
 # ページの構成
 st.set_page_config(layout="wide")  # 横幅広めのレイアウト
 
-# Google Sheetsの設定
-SHEET_ID = "1amJJDVMr3__OmLgWo1Z9w6FXZ9aMaNm0WRlx1_TYXnE"  
-RANGE_NAME = "【人材】DB'!A:O"  
+# # Google Sheetsの設定
+# SHEET_ID = "1amJJDVMr3__OmLgWo1Z9w6FXZ9aMaNm0WRlx1_TYXnE"  
+# RANGE_NAME = "【人材】DB'!A:O"  
 
 # 左側：案件入力フォーム
 with st.sidebar:
@@ -68,13 +68,13 @@ with st.sidebar:
     if st.button("マッチング実行"):
         st.session_state['match_trigger'] = True
 
-# Google Sheetsから人材データを取得
-talent_df = get_data_from_sheets(SHEET_ID, RANGE_NAME)
-if talent_df.empty:
-    st.error("Google Sheetsからデータを取得できませんでした。")
-else:
-    st.subheader("人材一覧")
-    st.dataframe(talent_df, use_container_width=True)
+# # Google Sheetsから人材データを取得
+# talent_df = get_data_from_sheets(SHEET_ID, RANGE_NAME)
+# if talent_df.empty:
+#     st.error("Google Sheetsからデータを取得できませんでした。")
+# else:
+#     st.subheader("人材一覧")
+#     st.dataframe(talent_df, use_container_width=True)
 
 # 真ん中：人材一覧表示とマッチング結果
 st.title("人材マッチングシステム")
