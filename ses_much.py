@@ -4,22 +4,22 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import json
 
-# # サービスアカウント認証情報
-# SERVICE_ACCOUNT_FILE = 'service_account.json'
-# SCOPES = [
-#     'https://www.googleapis.com/auth/spreadsheets',
-#     'https://www.googleapis.com/auth/documents',
-#     'https://www.googleapis.com/auth/drive'
-# ]
+# サービスアカウント認証情報
+SERVICE_ACCOUNT_FILE = 'service_account.json'
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/documents',
+    'https://www.googleapis.com/auth/drive'
+]
 
-# # Google API認証
-# def authenticate_google_services():
-#     with open(SERVICE_ACCOUNT_FILE, 'r') as f:
-#         service_account_info = json.load(f)
-#     credentials = service_account.Credentials.from_service_account_info(
-#         service_account_info, scopes=SCOPES
-#     )
-#     return credentials
+# Google API認証
+def authenticate_google_services():
+    with open(SERVICE_ACCOUNT_FILE, 'r') as f:
+        service_account_info = json.load(f)
+    credentials = service_account.Credentials.from_service_account_info(
+        service_account_info, scopes=SCOPES
+    )
+    return credentials
 
 # # Google Sheetsからデータを取得
 # def get_data_from_sheets(sheet_id, range_name):
