@@ -39,7 +39,7 @@ def get_data_from_sheets(sheet_id, range_name):
 
 # Google Sheetsの設定
 SHEET_ID = "1amJJDVMr3__OmLgWo1Z9w6FXZ9aMaNm0WRlx1_TYXnE"  
-RANGE_NAME = "【人材】DB'!A:O"  
+RANGE_NAME = "'【人材】DB'!A:O"
 
 # ページの構成
 st.set_page_config(layout="wide")  # 横幅広めのレイアウト
@@ -53,10 +53,7 @@ data = {
     "稼働条件": ["フルリモート", "フルリモート", "オンサイト"],
     "稼働開始日": ["2024-01-20", "2024-01-01", "2024-02-01"],
 }
-talent_df = pd.DataFrame(data)
-
-
-
+# talent_df = pd.DataFrame(data)
 
 # 左側：案件入力フォーム
 with st.sidebar:
@@ -74,11 +71,11 @@ with st.sidebar:
 
 # 真ん中：人材一覧表示とマッチング結果
 st.title("人材マッチングシステム")
+talent_df = get_data_from_sheets(SHEET_ID, RANGE_NAME)
 st.subheader("人材一覧")
 
 
 # Google Sheetsから人材データを取得
-talent_df = get_data_from_sheets(SHEET_ID, RANGE_NAME)
 if talent_df.empty:
     st.error("Google Sheetsからデータを取得できませんでした。")
 else:
